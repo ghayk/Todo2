@@ -18,30 +18,36 @@ const InitialIcons = [
     {src:gif,alt:'Анимация',color:'#E2E47A',id:IdGenerator()},
     {src:polish,alt:'Прлировка',color:'#BA68FB',id:IdGenerator()},
 ]
-export default function Icons(){
+export default function Icons(){    
     const [icons,setIcons] = useState(InitialIcons)
     const [openModal,setopenModal] = useState('none')
     const [selectId,setSelectId] = useState('')
     const [selectColor,setSelectColor] = useState('')
-    function fooOpenModal (id){       
+
+    function fooOpenModal (id){   
+        let cloneIcons = [...icons]    
             setopenModal('flex')
             setSelectId(id)     
-            let color =  icons.filter(i=>i.id===id)[0].color
+            let color =  cloneIcons.filter(i=>i.id===id)[0].color
             setSelectColor(color)
     }
+
     function dellIcon(id){
-        let newIcons = icons.filter(i=>i.id!==id)
-        setIcons(newIcons)
+        let cloneIcons = [...icons]
+        cloneIcons = icons.filter(i=>i.id!==id)
+        setIcons(cloneIcons)
         setopenModal('none')
     }
+
     function editIcon(color){
-        let newIcons = icons.map(i=>{
+        let cloneIcons = [...icons]
+        cloneIcons = cloneIcons.map(i=>{
             if(i.id===selectId){
                 i.color = color
             }
             return i
         })
-        setIcons(newIcons)
+        setIcons(cloneIcons)
         setopenModal('none')
     }
         return (

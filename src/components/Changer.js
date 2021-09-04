@@ -24,16 +24,16 @@ export default function Changer () {
     }
     return(
         <div className='container'>         
-            <InputGroup className="mb-3">
+            <InputGroup>
                 <FormControl
-                    className='m-2'
+                    className='mt-2'
                     value={amd} 
                     onChange={e=>setAmd(e.target.value)} 
                     type='number'
                     placeholder='Enter your many'
                     />
                 <Button  
-                    className='m-2'
+                    className='mt-2'
                     variant="outline-secondary" 
                     id="button-addon2"
                     onClick={()=>convert(amd)}
