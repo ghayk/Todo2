@@ -1,6 +1,7 @@
 import React from 'react';
 import Title from './Title';
 import Icons from './Icons';
+import Changer from './Changer';
 
 function Todo () {
     
@@ -8,6 +9,7 @@ function Todo () {
         <div className='container'>
             <Title />
             <Icons />
+            <Changer />
         </div>
     )
 }

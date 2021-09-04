@@ -50,14 +50,14 @@ export default function Icons(){
                 {icons.map(i=>{
                     return( 
                         <div onClick={()=>fooOpenModal(i.id)} className='iconCard' key={i.id}>
-                            <img src={i.src} alt={i.alt} style={{color:i.color}} />
+                            <img src={i.src} alt={i.alt} />
                             <div className='circle' style={{backgroundColor:i.color}}></div>
                             <p className='iconName'>{i.alt}</p>
                         </div>                       
                     )
                 })}
                 <div className='addIcon'>
-                    <img src={plus} alt='plus'></img>
+                    <img  src={plus} alt='plus' />
                 </div>
             </div>
             <div className='rec'></div>
