@@ -25,20 +25,23 @@ export default function Icons(){
     const [selectColor,setSelectColor] = useState('')
     const [selectName,setSelectName] = useState('')
     const [addOrEdd,setAddOrEdd] = useState('')
+    
+    let fileInput = React.createRef()
+    
     function fooOpenModal (id){   
         let cloneIcons = [...icons]    
         setopenModal('flex')
         setAddOrEdd('edd')
         setSelectId(id)     
-            let color =  cloneIcons.filter(i=>i.id===id)[0].color
-            let name =  cloneIcons.filter(i=>i.id===id)[0].alt
-            setSelectColor(color)
-            setSelectName(name)
-        }
+        let color =  cloneIcons.filter(i=>i.id===id)[0].color
+        let name =  cloneIcons.filter(i=>i.id===id)[0].alt
+        setSelectColor(color)
+        setSelectName(name)
+    }
         
-        function dellIcon(id){
-            let cloneIcons = [...icons]
-            cloneIcons = icons.filter(i=>i.id!==id)
+    function dellIcon(id){
+        let cloneIcons = [...icons]
+        cloneIcons = icons.filter(i=>i.id!==id)
         setIcons(cloneIcons)
         setopenModal('none')
     }
@@ -56,7 +59,8 @@ export default function Icons(){
         setopenModal('none')
         setSelectName('')
     }
-    let fileInput = React.createRef()
+
+
     function addImage () {      
         let file = fileInput.current.files[0]
         if(file && selectName){
@@ -103,8 +107,8 @@ export default function Icons(){
                     onChange={(color)=>setSelectColor(color.hex)}
                     />
                     <div className='conInput'>
-                    <input type="file" ref={fileInput} disabled={!isdisabled()} className='inputFile'/>
-                    <input type="text" value={selectName} onChange={e=>setSelectName(e.target.value)} className='inputText'/>
+                        <input type="file" ref={fileInput} disabled={!isdisabled()} className='inputFile'/>
+                        <input type="text" value={selectName} onChange={e=>setSelectName(e.target.value)} className='inputText'/>
                     </div>
                 <div className='conBtn'>
                     <Button onClick={()=>dellIcon(selectId)}  variant="danger" disabled={isdisabled()}>Dell</Button>
