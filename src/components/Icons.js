@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import IdGenerator from '../helpers/IdGenerator'
-import {BlockPicker} from 'react-color'
+import {ChromePicker } from 'react-color'
 import {Button} from 'react-bootstrap'
 import file from '../svg/3Dfile.svg'
 import design from '../svg/design.svg'
@@ -23,34 +23,63 @@ export default function Icons(){
     const [openModal,setopenModal] = useState('none')
     const [selectId,setSelectId] = useState('')
     const [selectColor,setSelectColor] = useState('')
-
+    const [selectName,setSelectName] = useState('')
+    const [addOrEdd,setAddOrEdd] = useState('')
     function fooOpenModal (id){   
         let cloneIcons = [...icons]    
-            setopenModal('flex')
-            setSelectId(id)     
+        setopenModal('flex')
+        setAddOrEdd('edd')
+        setSelectId(id)     
             let color =  cloneIcons.filter(i=>i.id===id)[0].color
+            let name =  cloneIcons.filter(i=>i.id===id)[0].alt
             setSelectColor(color)
-    }
-
-    function dellIcon(id){
-        let cloneIcons = [...icons]
-        cloneIcons = icons.filter(i=>i.id!==id)
+            setSelectName(name)
+        }
+        
+        function dellIcon(id){
+            let cloneIcons = [...icons]
+            cloneIcons = icons.filter(i=>i.id!==id)
         setIcons(cloneIcons)
         setopenModal('none')
     }
-
-    function editIcon(color){
+    
+    function editIcon(color,name){     
         let cloneIcons = [...icons]
         cloneIcons = cloneIcons.map(i=>{
             if(i.id===selectId){
                 i.color = color
+                i.alt = name
             }
             return i
         })
         setIcons(cloneIcons)
         setopenModal('none')
+        setSelectName('')
     }
-        return (
+    let fileInput = React.createRef()
+    function addImage () {      
+        let file = fileInput.current.files[0]
+        if(file && selectName){
+            let reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onload = () => {   
+                const cloneIcons = [...icons]
+                const newIcon =  {src:reader.result ,alt:selectName,color:selectColor,id:IdGenerator()}
+                cloneIcons.push(newIcon)
+                setIcons(cloneIcons)
+                setopenModal('none')
+            }
+        }        
+    }
+    function isdisabled () {
+        return (addOrEdd==='add')?true:false
+    }
+    function fooAdd () {
+        setSelectName('')
+        setAddOrEdd('add')
+        setopenModal('flex')
+    }
+    return (
         <div className='conIcons'>
             <div className='conIconsImg'>
                 {icons.map(i=>{
@@ -62,19 +91,25 @@ export default function Icons(){
                         </div>                       
                     )
                 })}
-                <div className='addIcon'>
+                <div className='addIcon' onClick={fooAdd}>
                     <img  src={plus} alt='plus' />
                 </div>
             </div>
             <div className='rec'></div>
             <div style={{display:openModal}} className='editModal'>
-                <BlockPicker
+                <ChromePicker  
+                    className='w-50'
                     color={selectColor}
                     onChange={(color)=>setSelectColor(color.hex)}
-                />
-                <div>
-                    <Button onClick={()=>dellIcon(selectId)}  variant="danger">Dell</Button>
-                    <Button onClick={()=>editIcon(selectColor)} variant="success" >Edit</Button>
+                    />
+                    <div className='conInput'>
+                    <input type="file" ref={fileInput} disabled={!isdisabled()} className='inputFile'/>
+                    <input type="text" value={selectName} onChange={e=>setSelectName(e.target.value)} className='inputText'/>
+                    </div>
+                <div className='conBtn'>
+                    <Button onClick={()=>dellIcon(selectId)}  variant="danger" disabled={isdisabled()}>Dell</Button>
+                    <Button onClick={()=>editIcon(selectColor,selectName)} variant="success" disabled={isdisabled()} >Edit</Button>
+                    <Button onClick={addImage} disabled={!isdisabled()}>Add</Button>
                 </div>
             </div>
         </div>
