@@ -9,6 +9,7 @@ import idea from '../svg/idea.svg'
 import polish from '../svg/polish.svg'
 import rend from '../svg/rend.svg'
 import plus from '../svg/plus.svg'
+import image from '../svg/image-gallery.svg'
 
 const InitialIcons = [
     {src:idea, alt:'Идея Скетч',color:'#F5961B',id:IdGenerator()},
@@ -106,8 +107,11 @@ export default function Icons(){
                     color={selectColor}
                     onChange={(color)=>setSelectColor(color.hex)}
                     />
-                    <div className='conInput'>
-                        <input type="file" ref={fileInput} disabled={!isdisabled()} className='inputFile'/>
+                    <div className='conInput'>.                        
+                        <label  className='inputFile'>
+                            <input type="file" id="file" ref={fileInput} disabled={!isdisabled()} style={{display:'none'}}/>
+                            <img src={image} alt='add'/>
+                        </label>
                         <input type="text" value={selectName} onChange={e=>setSelectName(e.target.value)} className='inputText'/>
                     </div>
                 <div className='conBtn'>

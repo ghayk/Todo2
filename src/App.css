@@ -127,12 +127,23 @@
   margin: 10px;
 }
 .inputFile {
-  margin: 10px;
-  width: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: darkgrey;
+}
+.inputFile img {
+  width: 60%;
 }
 .inputText {
-  margin: 10px;
-  width: 90px;
+  margin: 5px;
+  width: 110px;
+  border-radius: 8px;
 }
 .conBtn {
   margin-top: 10px;
